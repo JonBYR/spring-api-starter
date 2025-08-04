@@ -58,12 +58,8 @@ public class User {
     public void addFavoriteProduct(Product product) {
         favoriteProducts.add(product);
     }
-
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ", " +
-                "email = " + email + ")";
+        return "Id: " + id + ", Name: " + name + ", Email: " + email;
     }
 }

@@ -1,6 +1,7 @@
 package com.codewithmosh.store.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
@@ -31,5 +33,10 @@ public class Category {
 
     public Category(byte id) {
         this.id = id;
+    }
+
+    public Category(byte b, String name) {
+        this.id = b;
+        this.name = name;
     }
 }
