@@ -12,10 +12,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.PasswordAuthentication;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Set;
 public class UserController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
     @GetMapping //don't need to specify the root as request mapping states root is /users
     //name is the name of the param in the request, in case paramater in the method is not called sort
     public Iterable<UserDto> getAllUsers(
@@ -61,6 +64,7 @@ public class UserController {
             );
         }
         var user = userMapper.toEntity(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword())); //encode password to a hash
         userRepository.save(user);
         UserDto dTo = userMapper.toDto(user);
         //uri builder is needed to showcase where the resource has been created for 201 response, in the response header

@@ -3,6 +3,8 @@ package com.codewithmosh.store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +28,8 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     @ToString.Exclude
     private Product product;
+
+    public BigDecimal getTotalPrice() {
+        return product.getPrice().multiply(new BigDecimal(quantity));
+    }
 }
