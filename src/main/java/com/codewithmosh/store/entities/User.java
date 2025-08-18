@@ -30,6 +30,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING) //states that the value must be stored as a string in the database
+    private Role role;
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
@@ -55,11 +58,17 @@ public class User {
     )
     private Set<Product> favoriteProducts = new HashSet<>();
 
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
     public void addFavoriteProduct(Product product) {
         favoriteProducts.add(product);
     }
     @Override
     public String toString() {
         return "Id: " + id + ", Name: " + name + ", Email: " + email;
+    }
+
+    public boolean isAuthUser(Long otherId) {
+        return id.equals(otherId);
     }
 }

@@ -4,6 +4,7 @@ import com.codewithmosh.store.dtos.ChangePasswordRequest;
 import com.codewithmosh.store.dtos.RegisterUserDto;
 import com.codewithmosh.store.dtos.UpdateUserDto;
 import com.codewithmosh.store.dtos.UserDto;
+import com.codewithmosh.store.entities.Role;
 import com.codewithmosh.store.entities.User;
 import com.codewithmosh.store.mappers.UserMapper;
 import com.codewithmosh.store.repositories.UserRepository;
@@ -65,6 +66,7 @@ public class UserController {
         }
         var user = userMapper.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword())); //encode password to a hash
+        user.setRole(Role.USER); //could be done in a mapper
         userRepository.save(user);
         UserDto dTo = userMapper.toDto(user);
         //uri builder is needed to showcase where the resource has been created for 201 response, in the response header
